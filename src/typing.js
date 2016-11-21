@@ -72,15 +72,10 @@ Word.prototype.handle_keypress = function (ev) {
     }
 }
 
-Word.prototype.timeout = function () {
-}
-
-
 Word.prototype.start = function () {
     /* start listening to the mic */
     /* register keyboard callback */
     document.addEventListener('keypress', this.handle_keypress.bind(this));
-    /* register timeout callback */
     /* render self. */
     this.ui.new_word(this.word);
 }
@@ -88,7 +83,6 @@ Word.prototype.start = function () {
 Word.prototype.finish = function () {
     /* stop listening on the mic */
     /* kill the keyboard callback */
-    /* kill the timeout callback */
     /* unrender self */
     this.ui.clear();
     /* call the callback! */
