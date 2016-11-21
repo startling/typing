@@ -83,6 +83,7 @@ Word.prototype.start = function () {
 Word.prototype.finish = function () {
     /* stop listening on the mic */
     /* kill the keyboard callback */
+    document.removeEventListener("keypress", this.handle_keypress.bind(this));
     /* unrender self */
     this.ui.clear();
     /* call the callback! */
