@@ -88,6 +88,7 @@ function main () {
     current_typing.id = "current_typing";
     current_typing.className = "empty";
 
+    console.log(document.body);
     document.body.appendChild(current_word);
     document.body.appendChild(current_typing);
 
@@ -104,4 +105,4 @@ function main () {
     })();
 }
 
-main();
+window.onload = main;
