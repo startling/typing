@@ -28,6 +28,7 @@ div#current_word {
     height: 2em;
     justify-content: center;
     padding: 1em 0;
+    font-size: 1.5em;
 }
 
 div#current_typing {
@@ -46,7 +47,6 @@ div#current_typing {
 div#current_typing.active-bad {
     border: 1px solid #f22;
     background-color: #fee;
-    
 }
 
 div#current_word.finished {
@@ -54,8 +54,9 @@ div#current_word.finished {
 }
 
 div#current_typing.finished {
-    border: 1px solid #aca;
+    border: 1px solid #7a7;
     background-color: #efe;
+    box-shadow: none;
 }
 
 ::-webkit-scrollbar { 
