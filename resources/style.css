@@ -16,7 +16,9 @@ div#container {
 }
 
 div#container * {
-    width: 100%;
+    width: 95%;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 div#current_word {
@@ -34,13 +36,29 @@ div#current_typing {
     box-shadow: inset 0px 0px 5px 2px #ddd;
     box-sizing: border-box;
     height: 2.2em;
-    margin: 0 1em;
     overflow-x: none;
     overflow-y: scroll;
     padding: 0.4em 1em;
     white-space: nowrap;
+    transition: background 0.2s ease, padding 0.8s linear;
+}
+
+div#current_typing.active-bad {
+    border: 1px solid #f22;
+    background-color: #fee;
+    
+}
+
+div#current_word.finished {
+    color: #9c9;
+}
+
+div#current_typing.finished {
+    border: 1px solid #aca;
+    background-color: #efe;
 }
 
 ::-webkit-scrollbar { 
     display: none; 
 }
+
