@@ -96,7 +96,6 @@ Word.prototype.finish = function () {
 }
 
 function main () {
-    /* TODO: actually talk to a service */
     /* TODO: collect other data about hte user, i.e. if it's a phone */
     /* make sure current word div and current progress div are present.  */
     var words = ["def", "abc"];
