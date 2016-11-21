@@ -40,7 +40,7 @@ UI.prototype.clear = function () {
 }
 
 UI.prototype.finished = function () {
-    var text = new Text("all done!");
+    var text = new Text("that's it for now!");
     this.current_word_div.appendChild(text);
     this.current_word_div.className = "finished";
     this.current_typing_div.className = "finished";
