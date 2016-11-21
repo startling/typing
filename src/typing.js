@@ -30,6 +30,7 @@ UI.prototype.new_word = function (word) {
     var text = new Text(word);
     this.current_word_div.appendChild(text);
     this.current_word_div.className = "active";
+    /* TODO pin to the right */
 }
 
 
@@ -80,7 +81,7 @@ function main () {
     /* TODO: actually talk to a service */
     /* TODO: collect other data about hte user, i.e. if it's a phone */
     /* make sure current word div and current progress div are present.  */
-    var words = ["def", "abc"];
+    var words = ["def", "abc def ghi jkl mno pqr stu"];
     var ui = new UI(document.getElementById("current_word"),
 		    document.getElementById("current_typing"));
     (function next_word () {
@@ -89,6 +90,7 @@ function main () {
 	    var word = new Word(here, ui, next_word);
 	    word.start();
 	} else {
+	    /* TODO: show something to the user. */
 	    console.log("!!! all done.\n");
 	}
     })();
