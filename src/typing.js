@@ -44,6 +44,7 @@ function Word(word, ui, finish) {
 Word.prototype.handle_keypress = function (ev) {
     /* TODO keep track of timings */
     /* TODO should we allow typos? */
+    /* TODO call wrong_char */
     if (String.fromCharCode(ev.charCode) == this.remaining_word[0]) {
 	this.ui.right_char(this.remaining_word.shift());
 	if (this.remaining_word.length == 0) {
@@ -79,21 +80,9 @@ function main () {
     /* TODO: actually talk to a service */
     /* TODO: collect other data about hte user, i.e. if it's a phone */
     /* make sure current word div and current progress div are present.  */
-    /* TODO put these in a static docuemnt */
-    var current_word = document.createElement("div");
-    current_word.id = "current_word";
-    current_word.className = "empty";
-
-    var current_typing = document.createElement("div");
-    current_typing.id = "current_typing";
-    current_typing.className = "empty";
-
-    console.log(document.body);
-    document.body.appendChild(current_word);
-    document.body.appendChild(current_typing);
-
     var words = ["def", "abc"];
-    var ui = new UI(current_word, current_typing);
+    var ui = new UI(document.getElementById("current_word"),
+		    document.getElementById("current_typing"));
     (function next_word () {
 	var here = words.pop();
 	if (here) {
