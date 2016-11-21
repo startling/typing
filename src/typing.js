@@ -50,6 +50,7 @@ function Word(word, ui, finish) {
     this.finish_fn = finish;
     this.ui = ui;
     this.log = [];
+    this.typos = 0;
 }
 
 Word.prototype.handle_keypress = function (ev) {
@@ -67,6 +68,7 @@ Word.prototype.handle_keypress = function (ev) {
     } else {
 	/* make sure it's a char */
 	if (code.length > 0) {
+	    this.typos += 1;
 	    this.ui.wrong_char(code);
 	}
     }
