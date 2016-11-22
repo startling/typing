@@ -4,9 +4,11 @@ var Phrase = require("./phrase.js");
 var browser = require("bowser");
 
 function metadata () {
-    var b = browser._detect(navigator.userAgent);
-    b.referer = document.referrer;
-    return b;
+    return {
+	user_agent: navigator.userAgent,
+	browser: browser._detect(navigator.userAgent),
+	referer: document.referrer
+    };
 }
 
 function main () {
