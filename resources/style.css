@@ -21,7 +21,7 @@ div#container * {
     margin-right: auto;
 }
 
-div#current_word {
+div#current_phrase {
     align-items: center;
     color: #3fa0af;
     display: flex;
@@ -49,7 +49,7 @@ div#current_typing.active-bad {
     background-color: #fee;
 }
 
-div#current_word.finished {
+div#current_phrase.finished {
     color: #9c9;
 }
 

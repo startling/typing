@@ -1,6 +1,6 @@
 #!/bin/bash
 
-git clean -f out
+git clean -fx out
 ./node_modules/browserify/bin/cmd.js src/typing.js -o out/typing.js
 cp -r resources/* out
 
