@@ -8,6 +8,7 @@
     },
     "devDependencies": {
 	"browserify": "13.1.1",
+	"uglifyify": "3.0.4",
 	"beefy": "2.1.8"
     },
     "scripts": {
