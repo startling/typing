@@ -28,7 +28,6 @@ UI.prototype.backspace = function () {
 UI.prototype.clear = function () {
     this.current_word_div.className = "empty";
     this.current_typing_div.className = "empty";
-    
     while (this.current_word_div.firstChild) {
 	this.current_word_div.removeChild(
 	    this.current_word_div.firstChild)
@@ -54,12 +53,43 @@ UI.prototype.new_word = function (word) {
 }
 
 
+function Sound() {
+    this.recorder = null
+    this.data = [];
+}
+
+Sound.prototype.start = function (done, err) {
+    var self = this;
+    navigator.getUserMedia(
+	{audio: true},
+	function (lms) {
+	    self.recorder = new MediaRecorder(lms);
+	    self.recorder.ondataavailable = function (sound) {
+		self.data.push(sound.data);
+	    }
+	    done(self)
+	},
+	err);
+}
+
+Sound.prototype.record = function () {
+    this.recorder.start();
+}
+
+Sound.prototype.stop = function  () {
+    this.recorder.stop();
+    var data = this.data;
+    this.data = [];
+    return data;
+}
+
 /* current state */
-function Word(word, ui, finish) {
+function Word(word, ui, sound, finish) {
     this.word = word;
     this.remaining_word = word.split("");
     this.finish_fn = finish;
     this.ui = ui;
+    this.sound = sound;
     /* all keypresses and when they're pressed */
     this.log = [];
     /* number of bad keys pressed */
@@ -80,7 +110,6 @@ Word.prototype.handle_keypress = function (ev) {
 		   key: ev.key,
 		   when: (new Date().getTime()),
 		   corect: code == this.remaining_word[0]});
-    /* TODO avoid logging repeat characters? or what? */
     if (ev.key == "Backspace") {
 	if (this.typos_current > 0) {
 	    this.typos_current -= 1;
@@ -89,10 +118,11 @@ Word.prototype.handle_keypress = function (ev) {
 	    this.ui.wrong_char(code);
 	}
     } else if (this.typos_current == 0 && code == this.remaining_word[0]) {
-	this.first_keypress_time |= new Date().getTime();
+	if (!this.first_keypress_time) {
+	    this.first_keypress_time = new Date().getTime();
+	}
 	this.ui.right_char(this.remaining_word.shift());
 	if (this.remaining_word.length == 0) {
-	    /* TODO: send this */
 	    this.finish();
 	}
     } else {
@@ -106,40 +136,61 @@ Word.prototype.handle_keypress = function (ev) {
 }
 
 Word.prototype.start = function () {
-    /* TODO start listening to the mic */
     /* register keyboard callback */
     window.onkeydown = this.handle_keypress.bind(this);
+    /* start listening to the mic */
+    this.sound.record();
     /* render self. */
     this.start_time = new Date().getTime();
     this.ui.new_word(this.word);
 }
 
 Word.prototype.finish = function () {
-    /* TODO stop listening on the mic */
     /* kill the keyboard callback */
     window.onkeydown = null;
+    /* stop listening on the mic */
+    var sound_data = this.sound.stop();
     /* unrender self */
     this.ui.clear();
     /* call the callback! */
-    this.finish_fn();
+    this.finish_fn({
+	word: this.word,
+	keypresses: this.log,
+	typos: this.typos_total,
+	start_time: this.start_time,
+	first_keypress_time: this.first_keypress_time,
+	sound_data: sound_data
+    });
 }
 
 function main () {
     /* TODO: collect other data about hte user, i.e. if it's a phone, referer? */
     /* make sure current word div and current progress div are present.  */
-    var words = ["def", "abc"];
-    var ui = new UI(document.getElementById("current_word"),
-		    document.getElementById("current_typing"));
-    (function next_word () {
-	var here = words.pop();
-	if (here) {
-	    var word = new Word(here, ui, next_word);
-	    word.start();
-	} else {
-	    ui.finished();
-	    console.log("!!! all done.\n");
-	}
-    })();
+    (new Sound()).start(
+	function (sound) {
+	    var words = ["def", "abc"];
+	    var ui = new UI(document.getElementById("current_word"),
+			    document.getElementById("current_typing"));
+	    (function next_word () {
+		var here = words.pop();
+		if (here) {
+		    var word = new Word(here, ui, sound,
+					function (data) {
+					    /* TODO: send this to the server  */
+					    console.log("Recorded: ", data);
+					    next_word();
+					});
+		    word.start();
+		} else {
+		    ui.finished();
+		    console.log("!!! all done.\n");
+		}
+	    })();
+	},
+	function (err) {
+	    /* TODO: display this to the user */
+	    console.log("Can't record!");
+	});
 }
 
 window.onload = main;
