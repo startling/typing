@@ -2,5 +2,5 @@
 
 BUCKET=type-this-phrase
 
-aws s3 sync out/ s3://$BUCKET/ --acl public-read
+aws s3 sync out/ s3://$BUCKET/ --acl public-read --delete
 
