@@ -1,10 +1,16 @@
 var UI = require("./ui.js");
 var Sound = require("./sound.js");
 var Phrase = require("./phrase.js");
+var browser = require("bowser");
+
+function metadata () {
+    var b = browser._detect(navigator.userAgent);
+    b.referer = document.referrer;
+    return b;
+}
 
 function main () {
-    /* TODO: collect other data about hte user, i.e. if it's a phone, referer? */
-    /* make sure current phrase div and current progress div are present.  */
+    var meta = metadata();
     (new Sound()).start(
 	function (sound) {
 	    var phrases = ["def", "abc"];
@@ -17,7 +23,8 @@ function main () {
 			here, ui, sound,
 			function (data) {
 			    /* TODO: send this to the server  */
-			    console.log("Recorded: ", data);
+			    console.log("Recorded: ", data,
+					"Metadata: ", meta);
 			    next_phrase();
 			});
 		    phrase.start();

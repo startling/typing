@@ -3,6 +3,9 @@
     "version": "0.0.1",
     "description": "",
     "author": "Elizabeth Morgan Dixon <_@lizzie.io>",
+    "dependencies": {
+	"bowser": "1.5.0"
+    },
     "devDependencies": {
 	"browserify": "13.1.1",
 	"beefy": "2.1.8"
