@@ -63,3 +63,7 @@ div#current_typing.finished {
     display: none; 
 }
 
+p.warning {
+    color: #c99;
+    font-weight: bold;
+}

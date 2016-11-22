@@ -11,8 +11,27 @@ function metadata () {
     };
 }
 
+function warn (warning) {
+    var container = document.getElementById("container");
+    var p = document.createElement("p");
+    var text = new Text(warning);
+    p.appendChild(text);
+    p.className = "warning";
+    container.insertBefore(p, container.firstChild);
+}
+
+var phone_warning = "Note: we're not really looking for phone \
+or tablet data. You're welcome to participate still! \
+But we might not use it.";
+var microphone_warning = "We won't be able to collect \
+data, since we don't have access to your microphone. If you're interested, \
+please give us access.";
+
 function main () {
     var meta = metadata();
+    if (meta.tablet || meta.phone) {
+	warn(phone_warning);
+    }
     (new Sound()).start(
 	function (sound) {
 	    var phrases = ["def", "abc"];
@@ -32,13 +51,11 @@ function main () {
 		    phrase.start();
 		} else {
 		    ui.finished();
-		    console.log("!!! all done.\n");
 		}
 	    })();
 	},
 	function (err) {
-	    /* TODO: display this to the user */
-	    console.log("Can't record!");
+	    warn(microphone_warning);
 	});
 }
 
