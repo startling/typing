@@ -1,0 +1,6 @@
+#!/bin/bash
+
+# TODO: real build w browserify
+git clean -f out
+cp -r resources/ out
+cp -r src out

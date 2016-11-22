@@ -1,0 +1,6 @@
+#!/bin/bash
+
+BUCKET=type-this-phrase
+
+aws s3 sync out/ s3://$BUCKET/ --acl public-read
+
