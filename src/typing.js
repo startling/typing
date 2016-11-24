@@ -26,7 +26,7 @@ But we might not use it.";
 var microphone_warning = "We won't be able to collect \
 data, since we don't have access to your microphone. If you're interested, \
 please give us access.";
-
+var api_warning = "We can't communicate with the backend! Something's broken, sorry!";
 
 function api_url(path) {
     var port_part = "";
@@ -45,9 +45,9 @@ function api_url(path) {
 function generate_cookie(then) {
     var req = new XMLHttpRequest();
     req.addEventListener("load", then);
+    req.addEventListener("error", function () { warn(api_warning); });
     req.open("GET", api_url("cookie"));
     req.send();
-    /* TODO error handling */
 }
 
 function fetch_phrases(then) {
@@ -55,9 +55,9 @@ function fetch_phrases(then) {
     req.addEventListener("load", function () {
 	then(JSON.parse(this.responseText)["phrases"]);
     });
+    req.addEventListener("error", function () { warn(api_warning); });
     req.open("GET", api_url("phrases"));
     req.send();
-    /* TODO error handling */
 }
 
 function main () {
@@ -65,13 +65,13 @@ function main () {
     if (meta.tablet || meta.phone) {
 	warn(phone_warning);
     }
+    var ui = new UI(
+	document.getElementById("current_phrase"),
+	document.getElementById("current_typing"));
     generate_cookie(function () {
 	fetch_phrases(function (phrases) {
 	    (new Sound()).start(
 		function (sound) {
-		    var ui = new UI(
-			document.getElementById("current_phrase"),
-			document.getElementById("current_typing"));
 		    (function next_phrase () {
 			var here = phrases.pop();
 			if (here) {

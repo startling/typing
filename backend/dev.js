@@ -45,6 +45,6 @@ server.listen(process.env.API_PORT, process.env.ADDRESS, function () {
 	}, 500);
     });
     console.log("[!] serving on "
-		+ process.env.DOMAIN + ":"
-		+ process.env.PORT + ". Have fun!");
+		+ process.env.API_DOMAIN + ":"
+		+ process.env.API_PORT + ". Have fun!");
 });
