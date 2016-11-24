@@ -7,7 +7,7 @@ exports.handler = function (event, context, callback) {
     /* TODO: only do it if no cookie is set */
     callback(null, {"cookie"
 		    : "userid=" + Math.random()
-		    + "; Domain=" + process.env.DOMAIN
+		    + "; Domain=" + process.env.API_DOMAIN
 		    + "; Max-Age=" + 365 * 24 * 60 * 60 * 1000
 		    + httpsOnly
 		    + ";"});
