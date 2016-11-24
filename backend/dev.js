@@ -11,7 +11,10 @@ var server = http.createServer(function (request, response) {
 	    undefined, undefined,
 	    function (_, body) {
 		/*TODO: don't always 200? */
-		response.writeHead(200, {"Set-Cookie": body["cookie"]});
+		response.writeHead(200,
+				   {"Access-Control-Allow-Origin": "*",
+				    "Content-Type": "application/json",
+				    "Set-Cookie": body["cookie"]});
 		response.end(body.response || "");
 	    });
     } else if (request.url == "/phrases") {
@@ -19,7 +22,8 @@ var server = http.createServer(function (request, response) {
 	    undefined, undefined,
 	    function (_, body) {
 		/*TODO: don't always 200? */
-		response.writeHead(200, {"Content-Type": "application/json"});
+		response.writeHead(200, {"Access-Control-Allow-Origin": "*",
+					 "Content-Type": "application/json"});
 		response.end(body.response || "");
 	    });
     } else {

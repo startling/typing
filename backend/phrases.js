@@ -3,5 +3,5 @@ exports.handler = function (event, context, callback) {
     callback(null, { "response"
 		     : JSON.stringify(
 			 { "phrases"
-			 : ["abc", "def"]})});
+			 : ["def", "abc"]})});
 }

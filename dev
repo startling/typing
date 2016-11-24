@@ -2,7 +2,7 @@
 
 set -e
 
-export PORT=8081 API_DOMAIN=localhost ADDRESS=0.0.0.0 HTTP=1
+export PORT=8081 API_PROTOCOL=http API_DOMAIN=localhost ADDRESS=0.0.0.0
 echo "[.] starting backend."
 node backend/dev.js &
 BACKEND_PID=$!
@@ -21,7 +21,7 @@ while true; do
     # if either of them is dead, exit with 1.
     if ! kill -0 $FRONTEND_PID 2>/dev/null; then
 	echo "[x] frontend is dead?"
-	exit 1;
+	exit 1;v
     fi
     if ! kill -0 $BACKEND_PID 2>/dev/null; then
 	echo "[x] backend is dead?"

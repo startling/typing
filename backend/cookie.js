@@ -1,7 +1,7 @@
 /* generate a cookie, return nothing, 200. */
 exports.handler = function (event, context, callback) {
     var httpsOnly = "";
-    if (!process.env.HTTP) {
+    if (process.env.API_PROTOCOL == "https") {
 	httpsOnly = "; HttpsOnly"
     }
     /* TODO: only do it if no cookie is set */
