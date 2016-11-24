@@ -69,30 +69,36 @@ function main () {
 	document.getElementById("current_phrase"),
 	document.getElementById("current_typing"));
     generate_cookie(function () {
-	fetch_phrases(function (phrases) {
-	    (new Sound()).start(
-		function (sound) {
-		    (function next_phrase () {
+	var phrases = [];
+	(new Sound()).start(
+	    function (sound) {
+		(function next_phrase () {
+		    if (phrases.length == 0) {
+			fetch_phrases(function (p) {
+			    if (!p) {
+				warn(api_warning);
+			    } else if (p.length == 0) {
+				ui.finish();
+			    }
+			    phrases = p;
+			    next_phrase()
+			});
+		    } else {
 			var here = phrases.pop();
-			if (here) {
-			    var phrase = new Phrase(
-				here, ui, sound,
-				function (data) {
-				    /* TODO: send this to the server  */
-				    console.log("Recorded: ", data,
-						"Metadata: ", meta);
-				    next_phrase();
-				});
-			    phrase.start();
-			} else {
-			    ui.finished();
-			}
-		    })();
-		},
-		function (err) {
-		    warn(microphone_warning);
-		});
-	})
+			var phrase = new Phrase(
+			    here, ui, sound,
+			    function (data) {
+				/* TODO: send this to the server  */
+				console.log("Recorded: ", data,
+					    "Metadata: ", meta);
+				next_phrase();
+			    });
+			phrase.start();
+		    }})();
+	    },
+	    function (err) {
+		warn(microphone_warning);
+	    });
     });
 }
 
