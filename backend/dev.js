@@ -1,15 +1,25 @@
 var http = require("http");
-var cookie_handler = require("./cookie.js").handler;
+var cookie = require("./cookie.js");
+var phrases = require("./phrases.js");
 
 
 var server = http.createServer(function (request, response) {
+    console.log("[.] serving " + request.url + ".");
     /* todo real url parsing. */
     if (request.url == "/cookie") {
-	var c = cookie_handler(
+	cookie.handler(
 	    undefined, undefined,
 	    function (_, body) {
 		/*TODO: don't always 200? */
 		response.writeHead(200, {"Set-Cookie": body["cookie"]});
+		response.end(body.response || "");
+	    });
+    } else if (request.url == "/phrases") {
+	phrases.handler(
+	    undefined, undefined,
+	    function (_, body) {
+		/*TODO: don't always 200? */
+		response.writeHead(200, {"Content-Type": "application/json"});
 		response.end(body.response || "");
 	    });
     } else {

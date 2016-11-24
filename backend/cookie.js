@@ -1,6 +1,5 @@
 /* generate a cookie, return nothing, 200. */
 exports.handler = function (event, context, callback) {
-    var expires = new Date();
     var httpsOnly = "";
     if (!process.env.HTTP) {
 	httpsOnly = "; HttpsOnly"
