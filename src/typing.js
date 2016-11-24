@@ -31,10 +31,10 @@ please give us access.";
 function api_url(path) {
     var port_part = "";
     if ((process.env.API_PROTOCOL == "https"
-	 && process.env.PORT != "443")
+	 && process.env.API_PORT != "443")
 	|| (process.env.API_PROTOCOL == "http"
 	    && process.env.PORT != "80")) {
-	port_part += ":" + process.env.PORT;
+	port_part += ":" + process.env.API_PORT;
     }
     return process.env.API_PROTOCOL + "://"
 	+ process.env.API_DOMAIN

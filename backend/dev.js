@@ -31,7 +31,7 @@ var server = http.createServer(function (request, response) {
 	response.end("");
     }
 });
-server.listen(process.env.PORT, process.env.ADDRESS, function () {
+server.listen(process.env.API_PORT, process.env.ADDRESS, function () {
     process.on('SIGINT', function() {
 	console.log("[!] stopping the server.");
 	server.close(function () {
