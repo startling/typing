@@ -1,0 +1,30 @@
+#!/bin/bash
+
+set -e
+
+export PORT=8081 DOMAIN=localhost ADDRESS=0.0.0.0 HTTP=1
+echo "[.] starting backend."
+node backend/dev.js &
+BACKEND_PID=$!
+echo "[.] starting frontend"
+node dev.js &
+FRONTEND_PID=$!
+
+function finish {
+    kill $BACKEND_PID $FRONTEND_PID 2>/dev/null
+}
+trap finish EXIT
+
+sleep 2
+
+# if either of them is dead, exit with 1.
+if ! kill -0 $FRONTEND_PID 2>/dev/null; then
+    echo "[x] frontend is dead?"
+    exit 1;
+fi
+if ! kill -0 $BACKEND_PID 2>/dev/null; then
+    echo "[x] backend is dead?"
+    exit 1;
+fi
+
+while true; do sleep 10; done

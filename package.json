@@ -12,7 +12,7 @@
 	"beefy": "2.1.8"
     },
     "scripts": {
-        "start": "node dev.js",
+        "start": "./dev",
         "publish": "./build && ./publish"
     }
 }
