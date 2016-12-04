@@ -7,7 +7,7 @@ echo "[.] starting backend."
 node backend/dev.js &
 BACKEND_PID=$!
 echo "[.] starting frontend"
-node dev.js &
+node frontend/dev.js &
 FRONTEND_PID=$!
 
 function finish {

@@ -102,4 +102,4 @@ function main () {
     });
 }
 
-window.typing = {main: main};
+module.exports = main;

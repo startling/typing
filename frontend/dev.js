@@ -2,9 +2,9 @@ var beefy = require('beefy');
 var http = require('http');
 
 http.createServer(beefy({
-    cwd: "resources",
+    cwd: "frontend/resources",
     entries: {
-	'/typing.js': 'src/typing.js'
+	'/main.js': 'frontend/main.js'
     },
     bundler: "./node_modules/browserify/bin/cmd.js",
     live: true,
